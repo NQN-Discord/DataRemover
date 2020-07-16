@@ -1,0 +1,3 @@
+PyYAML
+elasticsearch_async
+elasticsearch==6.3.1

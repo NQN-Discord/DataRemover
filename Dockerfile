@@ -16,4 +16,4 @@ RUN crontab /etc/cron.d/data_remover
 
 ADD . .
 
-CMD ["crond", "-f"]
+CMD ["cron", "-f"]

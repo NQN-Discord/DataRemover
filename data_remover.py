@@ -12,12 +12,18 @@ import yaml
 import asyncio
 from elastic import ElasticSearchClient
 from datetime import datetime, timedelta
+from logging import basicConfig, INFO, getLogger
+from sys import stderr
 
+
+basicConfig(stream=stderr, level=INFO, format='%(asctime)s.%(msecs)03d %(levelname)s %(module)s - %(funcName)s: %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+log = getLogger(__name__)
 
 DISCORD_EPOCH = 1420070400000
 
 
 async def main(config):
+    log.info("Starting up")
     client = ElasticSearchClient(hosts=config["elastic_uri"])
     now = datetime.now()
     #  We keep data for up to 30 days, so we should delete it at 29 days
@@ -40,6 +46,7 @@ async def main(config):
                 message_ids.append(id)
         await db.bulk_delete(index="guild_message_str", ids=message_ids)
         del message_ids
+    log.info("Stopping")
 
 
 if __name__ == "__main__":

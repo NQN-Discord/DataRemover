@@ -12,12 +12,14 @@ import yaml
 import asyncio
 from elastic import ElasticSearchClient
 from datetime import datetime, timedelta
-from logging import basicConfig, INFO, getLogger
+from logging import basicConfig, INFO, ERROR, getLogger
 from sys import stderr
 
 
 basicConfig(stream=stderr, level=INFO, format='%(asctime)s.%(msecs)03d %(levelname)s %(module)s - %(funcName)s: %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 log = getLogger(__name__)
+elastic_log = getLogger("elasticsearch")
+elastic_log.setLevel(ERROR)
 
 DISCORD_EPOCH = 1420070400000
 
